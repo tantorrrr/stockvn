@@ -4,6 +4,7 @@ import json
 import pandas as pd
 from datetime import datetime # Thêm thư viện datetime để lấy ngày hiện tại
 from vnstock import Quote 
+from vnstock import Trading
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -131,8 +132,9 @@ def update_vnstock_data_to_sheet(request):
     if not service:
         return json.dumps({"status": "error", "message": "Không thể kết nối với Google Sheets API."}), 500
 
+    Trading(source='VCI').price_board(['VCB','ACB','TCB','BID'])
     # Chuyển stock_code thành một danh sách các mã cổ phiếu
-    stock_codes = ['nvl', 'tvn', 'ksb'] # Bạn có thể thay đổi danh sách này
+    stock_codes = ['BSR', 'BVB', 'FOC','KBC','KSB','NVL','TAR','TVN','VIX','VNM','TPB'] # Bạn có thể thay đổi danh sách này
     
     # Lấy ngày hiện tại
     today = datetime.now().strftime('%Y-%m-%d')
